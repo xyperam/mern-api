@@ -13,4 +13,4 @@ router.get('/products',productsController.getAllProducts);
 
 
 
-moudle.exports = router;
+module.exports = router;
