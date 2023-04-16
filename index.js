@@ -1,13 +1,12 @@
 const express = require('express');
 
 const app = express();
-const router = express.Router();
+const productRoutes = require('./src/routes/products');
 
-router.use('/products',(req,res,next)=>{
-    console.log('request:',req);
-})
 
-app.use('/',router)
+
+
+app.use('/',productRoutes);
 
 //GET '/users' ====> [{name: ilham}]
 app.listen(4000);
