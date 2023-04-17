@@ -4,7 +4,7 @@ exports.register = (req,res,next) =>{
     const password = req.body.password;
 
     const result={
-        message: "Register successs",
+        message: "Register success",
         data:{
             uid: 1,
             name: name,
