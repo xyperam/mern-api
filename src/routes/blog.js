@@ -4,8 +4,8 @@ const router = express.Router();
 const blogController = require('../controllers/blog');
 
 router.post('/post',
-[body('title').isLength({min:5}).withMessage('title tidak sesuai'),
-body('body').isLength({min:5}).withMessage('input body tidak sesuai')],
+[body('title'),
+body('body')],
 blogController.createBlogPost);
 
 module.exports = router;
