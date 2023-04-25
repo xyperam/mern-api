@@ -7,14 +7,23 @@ const blogRoutes=require('./src/routes/blog')
 const mongoose = require('mongoose');
 const multer = require('multer');
 
+//Setting storage engine
 const fileStorage = multer.diskStorage({
-    destination:(req,file,cb) =>{
-        cb(null,'/images');
-    },
-    filename: (req,file,cb)=>{
-        cb(null,new Date().toISOString().replace(/:/g, '-') + file.originalname)
-    }
-})
+  destination: "./images",
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}--${file.originalname}`);
+  },
+});
+// const fileStorage = multer.diskStorage({
+//     destination:(req,file,cb) =>{
+//         mkdir('./images/',(err)=>{ // error disini
+//             cb(null,'/images');
+//         })
+//     },
+//     filename: (req,file,cb)=>{
+//         cb(null,new Date().toISOString().replace(/:/g, '-') + file.originalname)
+//     }
+// })
 
 const fileFilter = (req,file,cb)=>{
     if(
