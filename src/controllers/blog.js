@@ -9,6 +9,7 @@ exports.createBlogPost = (req,res,next)=>{
         err.data = errors.array();
         throw err;
         }
+        
     if(!req.file){
         const err = new Error('Image harus di Upload');
         err.errorStatus = 422;
@@ -44,3 +45,42 @@ exports.createBlogPost = (req,res,next)=>{
  
     
 }
+
+exports.getAllBlogPost = (req,res,next)=>{
+    BlogPost.find()
+    .then(result =>{
+        res.status(200).json({
+            message: 'Blog Post berhasil dipanggil',
+            data: result
+        })
+    })
+    .catch(err=>{
+        next(err)
+    })
+}
+
+exports.getBlogPostById = (req,res,next)=>{
+    const postId = req.params.postId;
+    BlogPost.findById(postId)
+    .then(result=>{
+        if(!result){
+            const error = new Error('Blog Post tidak ditemukan');
+            error.errorStatus = 400;
+            throw error;
+        }
+        res.status(200).json({
+            message: 'Data Berhasil Dipanggil',
+            data: result,
+        })
+    })
+
+    .catch(err=>{
+        next(err)
+    })
+}
+
+exports.updateBlogPost = (req,res,next)=>{
+    
+}
+
+

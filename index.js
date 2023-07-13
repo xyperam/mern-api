@@ -52,6 +52,7 @@ app.use((error,req,res,next)=>{
     res.status(status).json({message: message,data:data});
 })
 mongoose.connect('mongodb+srv://ilhamimaninuralam:123@cluster0.7o4pfh8.mongodb.net/?retryWrites=true&w=majority')
+
 .then(()=>{
     app.listen(4000,()=> console.log('Connection Success'));
 })
