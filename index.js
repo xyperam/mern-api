@@ -6,7 +6,7 @@ const authRoutes =require('./src/routes/auth')
 const blogRoutes=require('./src/routes/blog')
 const mongoose = require('mongoose');
 const multer = require('multer');
-
+const path =require('path');
 //Setting storage engine
 const fileStorage = multer.diskStorage({
   destination: "./images",

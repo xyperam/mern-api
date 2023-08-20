@@ -1,5 +1,7 @@
 const {validationResult} = require('express-validator');
 const BlogPost = require('../models/blog')
+
+
 exports.createBlogPost = (req,res,next)=>{
     const errors = validationResult(req);
 
@@ -47,19 +49,46 @@ exports.createBlogPost = (req,res,next)=>{
 }
 
 exports.getAllBlogPost = (req,res,next)=>{
+    const currentPage = req.query.page || 1;
+    const perPage = req.query.perPage || 5;
+    let totalItems;
+    
+
     BlogPost.find()
-    .then(result =>{
+    .countDocuments()
+    .then(count =>{
+        totalItems = count;
+        return BlogPost.find()
+        .skip((currentPage - 1)* perPage)
+        .limit(perPage);
+    })
+    .then(result=>{
         res.status(200).json({
-            message: 'Blog Post berhasil dipanggil',
-            data: result
+            message: 'Data Blog Post Berhasil Dipanggil',
+            data:result,
+            total_data: totalItems,
+            per_page: perPage,
+            current_page: currentPage,
         })
     })
     .catch(err=>{
-        next(err)
+        next(err);
     })
+
+    // BlogPost.find()
+    // .then(result =>{
+    //     res.status(200).json({
+    //         message: 'Blog Post berhasil dipanggil',
+    //         data: result
+    //     })
+    // })
+    // .catch(err=>{
+    //     next(err)
+    // })
 }
 
 exports.getBlogPostById = (req,res,next)=>{
+
     const postId = req.params.postId;
     BlogPost.findById(postId)
     .then(result=>{
@@ -126,27 +155,28 @@ exports.updateBlogPost = (req,res,next)=>{
     })
 }
 
-// exports.deleteBlogPost= (req,res,next)=>{
-//     const postId = req.params.postId;
 
-//     BlogPost.findById(postId)
-//     .then (post =>{
-//         if(!post){
-//             const error = new Error('Blog Post tidak ditemukan');
-//             error.errorStatus = 400;
-//             throw error;
-//         }
-//         removeImage();
-//         res.status(200).json({
-//             message:'Hapus Blog Post Berhasil',
-//             data:{},
-//         })
-//     })
-//     .catch(err=>{
-//         next(err);
-//     })
-// }
+exports.deleteBlogPost= (req,res,next)=>{
+    const postId = req.params.postId;
 
-// const removeImage = (filePath) =>{
-//     console.log('filePath',filePath);
-// }
+    BlogPost.findById(postId)
+    .then (post =>{
+        if(!post){
+            const error = new Error('Blog Post tidak ditemukan');
+            error.errorStatus = 400;
+            throw error;
+        }
+        removeImage();
+        res.status(200).json({
+            message:'Hapus Blog Post Berhasil',
+            data:{},
+        })
+    })
+    .catch(err=>{
+        next(err);
+    })
+}
+
+const removeImage = (filePath) =>{
+    console.log('filePath',filePath);
+}

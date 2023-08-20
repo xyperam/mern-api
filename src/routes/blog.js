@@ -9,7 +9,7 @@ body('body')],
 blogController.createBlogPost);
 
 router.get('/posts',blogController.getAllBlogPost)
-router.get('/posts/:postId',blogController.getBlogPostById);
-router.put('/posts/:postId',[body('title'),body('body')],blogController.updateBlogPost);
-// router.delete('/post/:postId',blogController,deleteBlogPost);
+router.get('/post/:postId',blogController.getBlogPostById);
+router.put('/post/:postId',[body('title'),body('body')],blogController.updateBlogPost);
+router.delete('/post/:postId',blogController.deleteBlogPost);
 module.exports = router;
